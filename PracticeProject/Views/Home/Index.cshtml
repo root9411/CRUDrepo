@@ -10,6 +10,21 @@
 
     </section>
 
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown button
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            @foreach (var designation in ViewBag.DesignationList)
+            {
+                <li>
+                    <a class="dropdown-item" data-designation-id="@designation.Id">@designation.Designation</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+
     <div class="row">
         <table class="table table-responsive table-bordered table-hover">
             <thead>
@@ -52,14 +67,13 @@
 
                         <td class="text-center">
                             <div class="">
-                                <a href="#" onclick="" class="btn btn-success">Edit</a>
-                                <a href="#" onclick="deleteEmployee(@emp.EmpId)" class="btn btn-danger">Delete</a>
+                                <a href="#" onclick="departmentDropdown()" class="btn btn-success">Edit</a>
+                                <a href="#" onclick="DesignationDropDown()" class="btn btn-danger">Delete</a>
 
                             </div>
                         </td>
                     </tr>
                 }
-
 
             </tbody>
 
@@ -67,6 +81,7 @@
 </main>
 
 <script>
+
     function deleteEmployee(employeeId) {
         if (confirm("Are you sure you want to delete this employee?")) {
             $.ajax({

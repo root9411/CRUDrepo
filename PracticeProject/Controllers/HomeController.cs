@@ -21,6 +21,20 @@ namespace PracticeProject.Controllers
             var EmployeeList = result.data;
 
 
+            var DesignationDropDown = await process.List_of_ResponseData<EmployeeModel>(dicparam, "sp_getDesignationDropdown");
+            ViewBag.DesignationList = DesignationDropDown.data;
+
+            var departmentDropDown = await process.List_of_ResponseData<EmployeeModel>(dicparam, "sp_getDepartmentDropdown");
+
+            //var departmentData = departmentDropDown.data.Select(item => new
+            //{
+            //    Id = item.Id,
+            //    Department = item.Department,
+            //});
+
+            ViewBag.DepartmentList = departmentDropDown.data;
+
+
             return View(EmployeeList);
         }
 
@@ -43,6 +57,7 @@ namespace PracticeProject.Controllers
                 return Json(new { success = false, message = "Failed to delete employee" });
             }
         }
+
 
 
         public ActionResult About()
