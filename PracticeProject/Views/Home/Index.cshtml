@@ -1,0 +1,94 @@
+﻿@model IEnumerable<PracticeProject.Models.EmployeeModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    <section class="row" aria-labelledby="aspnetTitle">
+        <h1 id="title">Employee Details CRUD</h1>
+
+    </section>
+
+    <div class="row">
+        <table class="table table-responsive table-bordered table-hover">
+            <thead>
+                <tr class="table-active">
+                    <th>
+                        EmployeeID
+                    </th>
+                    <th>
+                        Employee Name
+                    </th>
+                    <th>
+                        Employee DOB
+                    </th>
+                    <th>
+                        Employee Joining Date
+                    </th>
+                    <th>
+                        Department
+                    </th>
+                    <th>
+                        Designation
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var emp in Model)
+                {
+                    <tr>
+                        <td>@emp.EmpId</td>
+                        <td>@emp.Name</td>
+                        <td>@emp.EmpDOB</td>
+                        <td>@emp.JoiningDate</td>
+                        <td>@emp.Department</td>
+                        <td>@emp.Designation</td>
+
+
+                        <td class="text-center">
+                            <div class="">
+                                <a href="#" onclick="" class="btn btn-success">Edit</a>
+                                <a href="#" onclick="deleteEmployee(@emp.EmpId)" class="btn btn-danger">Delete</a>
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+
+    </div>
+</main>
+
+<script>
+    function deleteEmployee(employeeId) {
+        if (confirm("Are you sure you want to delete this employee?")) {
+            $.ajax({
+                url: "/Home/DeleteEmployee", 
+                type: "POST",
+                data: { id: employeeId },
+                success: function (result) {
+                   
+                    if (result.success) {
+                        alert("Employee deleted successfully.");
+                       
+                        var row = $("td:contains(" + employeeId + ")").closest("tr");
+                        row.remove();
+                    } else {
+                        alert("Failed to delete employee.");
+                    }
+                },
+                error: function () {
+                    
+                    alert("An error occurred while deleting the employee.");
+                }
+            });
+        }
+    }
+</script>
